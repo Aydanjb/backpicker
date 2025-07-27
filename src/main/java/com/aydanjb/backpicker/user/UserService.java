@@ -1,5 +1,6 @@
 package com.aydanjb.backpicker.user;
 
+import com.aydanjb.backpicker.auth.JwtUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final JwtUtils jwtUtils;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
+        this.jwtUtils = jwtUtils;
     }
 
     public void register(String username, String email, String password) {
@@ -34,5 +37,16 @@ public class UserService {
         user.setCreatedAt(Instant.now());
 
         userRepository.save(user);
+    }
+
+    public String login (String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException(("Invalid credentials")));
+
+        if (!passwordEncoder.matches(password, user.getPasswordHash())) {
+            throw new IllegalArgumentException("Invalid credentials");
+        }
+
+        return jwtUtils.generateToken(user);
     }
 }

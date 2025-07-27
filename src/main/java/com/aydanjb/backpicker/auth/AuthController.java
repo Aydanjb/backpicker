@@ -1,11 +1,9 @@
 package com.aydanjb.backpicker.auth;
 
-import com.aydanjb.backpicker.user.RegisterRequest;
 import com.aydanjb.backpicker.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.authentication.UserServiceBeanDefinitionParser;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,5 +23,11 @@ public class AuthController {
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         userService.register(request.getUsername(), request.getEmail(), request.getPassword());
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
+        String token = userService.login(request.getEmail(), request.getPassword());
+        return ResponseEntity.ok(new LoginResponse(token));
     }
 }
