@@ -63,7 +63,7 @@ public class GearItemController {
 
     @DeleteMapping("/items/{id}")
     public ResponseEntity<Void> deleteGearItem(@AuthenticationPrincipal User user,
-                                                  @PathVariable Long id) {
+                                               @PathVariable Long id) {
         gearItemService.deleteGearItem(id, user.getId());
         return ResponseEntity.noContent().build();
     }

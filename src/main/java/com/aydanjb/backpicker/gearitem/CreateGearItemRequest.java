@@ -21,7 +21,8 @@ public class CreateGearItemRequest {
     @Size(max = 50, message = "Category must be 50 characters or fewer")
     private String category;
 
-    public CreateGearItemRequest() {}
+    public CreateGearItemRequest() {
+    }
 
     public CreateGearItemRequest(String name, Double weight, Double price,
                                  Integer quantity, String category) {
@@ -32,14 +33,43 @@ public class CreateGearItemRequest {
         this.category = category;
     }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public Double getWeight() { return weight; }
-    public void setWeight(Double weight) { this.weight = weight; }
-    public Double getPrice() { return price; }
-    public void setPrice(Double price) { this.price = price; }
-    public Integer getQuantity() { return quantity; }
-    public void setQuantity(Integer quantity) { this.quantity = quantity; }
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }

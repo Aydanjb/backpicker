@@ -30,7 +30,9 @@ public class GearList {
     @OneToMany(mappedBy = "gearList", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GearItem> items = new ArrayList<>();
 
-    public GearList() {}
+    public GearList() {
+    }
+
     public GearList(Long id, String name, String description, User user) {
         this.id = id;
         this.name = name;
