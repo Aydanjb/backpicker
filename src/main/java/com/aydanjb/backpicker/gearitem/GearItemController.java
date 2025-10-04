@@ -2,7 +2,6 @@ package com.aydanjb.backpicker.gearitem;
 
 import com.aydanjb.backpicker.user.User;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -42,5 +41,30 @@ public class GearItemController {
                                                            @PathVariable Long listId) {
         List<GearItem> items = gearItemService.getGearListItems(listId, user.getId());
         return ResponseEntity.ok(items);
+    }
+
+    @PutMapping("/items/{id}")
+    public ResponseEntity<GearItem> updateGearItem(@AuthenticationPrincipal User user,
+                                                   @PathVariable Long id,
+                                                   @Valid @RequestBody UpdateGearItemRequest request) {
+        GearItem updatedItem = gearItemService.updateGearItem(
+                id,
+                user.getId(),
+                request.getName(),
+                request.getWeight(),
+                request.getPrice(),
+                request.getQuantity(),
+                request.getCategory()
+        );
+
+        return ResponseEntity.ok(updatedItem);
+    }
+
+
+    @DeleteMapping("/items/{id}")
+    public ResponseEntity<Void> deleteGearItem(@AuthenticationPrincipal User user,
+                                                  @PathVariable Long id) {
+        gearItemService.deleteGearItem(id, user.getId());
+        return ResponseEntity.noContent().build();
     }
 }

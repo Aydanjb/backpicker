@@ -40,6 +40,22 @@ public class GearListController {
         return ResponseEntity.ok(gearList);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<GearList> updateGearList(
+            @AuthenticationPrincipal User user,
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateGearListRequest request) {
+        GearList gearList = gearListService.updateGearList(
+                id,
+                user.getId(),
+                request.getName(),
+                request.getDescription()
+        );
+
+        return ResponseEntity.ok(gearList);
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGearList(
             @AuthenticationPrincipal User user,
